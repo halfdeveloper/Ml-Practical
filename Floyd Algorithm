@@ -1,0 +1,61 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define max 5
+void floyd(int);
+int mini(int, int);
+int w[max][max], d[max][max][max];
+void main()
+{
+    int i, j, k, v;
+    printf("Enter the number of vertices \n");
+    scanf("%d", &v);
+    printf("Enter the weight\n");
+    for (i = 1; i <= v; i++)
+    {
+        for (j = 1; j <= v; j++)
+        {
+            scanf("%d", &w[i][j]);
+        }
+    }
+    floyd(v);
+}
+int mini(int a, int b)
+{
+    if (a < b)
+        return a;
+
+    return b;
+    
+}
+void floyd(int v)
+{
+    int i, j, k;
+    for (i = 1; i <= v; i++)
+    {
+        for (j = 1; j <= v; j++)
+        {
+            d[k][i][j] = w[i][j];
+        }
+    }
+    for (k = 1; k <= v; k++)
+    {
+        for (i = 1; i <= v; i++)
+        {
+            for (j = 1; j <= v; j++)
+            {
+                d[k][i][j] = mini(d[k - 1][i][j], d[k - 1][i][k] + d[k - 1][k][j]);
+            }
+        }
+    }
+    for (k = 0; k <= v; k++)
+    {
+        printf("k=%d \n", k);
+        for (i = 1; i <= v; i++)
+        {
+            printf("\n");
+            for (j = 1; j <= v; j++)
+                printf("\t %d", d[k][i][j]);
+        }
+        printf("\n");
+    }
+}
