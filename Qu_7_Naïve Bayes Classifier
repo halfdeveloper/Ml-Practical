@@ -1,0 +1,31 @@
+import pandas as pd
+from sklearn import tree
+from sklearn.preprocessing import LabelEncoder
+from sklearn.naive_bayes import GaussianNB
+data = pd.read_csv(r"C:\Users\DELL\Downloads\Data Set in csv format\play_tennis.csv")
+data.drop("day", axis=1, inplace=True)
+X = data.iloc[:,:-1]
+print("\n The First 5 Values of data is:")
+print(data.head())
+y = data.iloc[:,-1]
+print("The First 5 Value of Train Output is")
+print(y.head())
+le_outlook = LabelEncoder()
+X["outlook"] = le_outlook.fit_transform(X["outlook"])
+le_temperature = LabelEncoder()
+X["temp"] = le_temperature.fit_transform(X["temp"])
+le_humidity = LabelEncoder()
+X["humidity"] = le_humidity.fit_transform(X["humidity"])
+le_wind = LabelEncoder()
+X["wind"] = le_wind.fit_transform(X["wind"])
+print("\nNow the Train data is")
+print(X.head())
+le_playtennis = LabelEncoder()
+y = le_playtennis.fit_transform(y)
+print("\n Now the train output is\n",y)
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+classifier = GaussianNB()
+classifier.fit(X_train, y_train)
+from sklearn.metrics import accuracy_score
+print("Accuracy is ", accuracy_score(classifier.predict(X_test), y_test))
