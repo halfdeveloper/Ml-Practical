@@ -1,0 +1,45 @@
+#without using numpy
+import matplotlib.pyplot as plt
+x = [1, 2, 3, 4, 5]
+y = [7, 14, 15, 18, 19]
+
+n = len(x)
+n
+# x_mean and y_mean
+x_mean = sum(x) / n
+
+y_mean = sum(y) / n
+
+x_mean, y_mean
+# slope(Sxy) and intercept(Sxx)
+
+Sxy = 0 
+sum_xy = sum_xx = 0
+for i in range(0, n):
+    sum_xy = sum_xy + (x[i] * y[i]) 
+    sum_xx = sum_xx + (x[i] * x[i])
+    
+Sxy = sum_xy - n * x_mean * y_mean
+Sxx = sum_xx - n * x_mean * x_mean
+
+Sxy, Sxx
+b1 = Sxy / Sxx
+b0 = y_mean - (b1 * x_mean)
+
+print("Slope b1 is ", b1)
+print("Slope b0 is ",b0)
+plt.scatter(x,y,color="yellow")
+plt.xlabel("Independent variable X")
+plt.ylabel("Dependent variable y")
+
+y_pred = []
+
+for i in range(0, n):
+    y_pred.append(b1 * x[i] + b0)
+
+y_pred
+
+plt.scatter(x, y, color="green")
+plt.plot(x, y_pred, color="red")
+plt.xlabel("x")
+plt.ylabel("y")
